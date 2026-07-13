@@ -1,6 +1,6 @@
 # AegisLine
 
-![AegisLine  Security guardrails for every line of code](assets/aegisline-hero.png)
+![AegisLine — Security guardrails for every line of code](assets/aegisline-hero.png)
 
 **Security guardrails for every line of code.**
 
@@ -10,63 +10,68 @@ It is inspired by Ponytail's portable, always-on plugin architecture. AegisLine'
 
 > AegisLine is an engineering guardrail, not a security guarantee or a replacement for security scanners, penetration testing, AI red teaming, or human review.
 
-## Quick start
+## Easy installation
 
-### Requirements
+The public repository is [akhilthakurdev/AegisLine](https://github.com/akhilthakurdev/AegisLine). Publishing it on GitHub makes it available for direct installation with the commands below; it does not automatically list it in the official plugin directory.
 
-- One supported host: Claude Code, Codex, or GitHub Copilot CLI
-- Node.js 18 or newer for the automatic activation hook
-- Git for installation from GitHub
+### Before you start
 
-Replace `YOUR_GITHUB_USERNAME` below with the owner of the published AegisLine repository.
+Install the coding assistant you want to use. Also install Node.js 18 or newer because AegisLine uses a small Node.js hook to load its security guidance. Git is required when installing from GitHub.
 
-### Install in Codex
+### Codex
 
-Run:
+1. Open PowerShell or another terminal. Do not enter the following commands in the Codex chat.
+2. Add the public AegisLine marketplace and start Codex:
 
 ```powershell
-codex plugin marketplace add YOUR_GITHUB_USERNAME/aegisline
+codex plugin marketplace add akhilthakurdev/AegisLine
 codex
 ```
 
-Inside Codex:
-
-1. Enter `/plugins`.
-2. Select the **AegisLine** marketplace.
-3. Install **AegisLine**.
-4. Enter `/hooks`, inspect the AegisLine hooks, and trust them.
-5. Start a new Codex task.
-
-Use it:
+3. Inside Codex, enter `/plugins`.
+4. Select the marketplace named **aegisline**, find **AegisLine**, and install it.
+5. Enter `/hooks`, review the AegisLine hooks, and trust them if they match this repository.
+6. Close the current task and start a new Codex task so the plugin can load.
+7. Test the installation:
 
 ```text
 Use $aegisline to review the current changes for security issues.
 ```
 
-### Install in Claude Code
+To confirm that Codex saved the marketplace, run this in your terminal:
 
-Inside Claude Code, run:
+```powershell
+codex plugin marketplace list
+```
+
+### Claude Code
+
+1. Open Claude Code.
+2. Enter these commands inside Claude Code:
 
 ```text
-/plugin marketplace add YOUR_GITHUB_USERNAME/aegisline
+/plugin marketplace add akhilthakurdev/AegisLine
 /plugin install aegisline@aegisline
 ```
 
-Start a new Claude Code session, then use:
+3. Start a new Claude Code session.
+4. Test the installation:
 
 ```text
 /aegisline:aegisline review src/auth
 ```
 
-### Install in GitHub Copilot CLI
+### GitHub Copilot CLI
 
-Run:
+1. Open PowerShell or another terminal.
+2. Install AegisLine:
 
 ```powershell
-copilot plugin install YOUR_GITHUB_USERNAME/aegisline
+copilot plugin install akhilthakurdev/AegisLine
 ```
 
-Start a new Copilot CLI session, then use:
+3. Start a new Copilot CLI session.
+4. Test the installation:
 
 ```text
 /aegisline:aegisline review src/api

@@ -4,5 +4,7 @@
   "version": "0.1.0",
   "author": {"name": "AegisLine Contributors"},
   "license": "Apache-2.0",
+  "homepage": "https://github.com/akhilthakurdev/AegisLine",
+  "repository": "https://github.com/akhilthakurdev/AegisLine",
   "keywords": ["security", "appsec", "owasp", "mobile", "ai-security"]
 }
