@@ -1,0 +1,25 @@
+{
+  "name": "aegisline",
+  "version": "0.1.0",
+  "description": "Secure-by-default guidance and AppSec reviews for AI coding agents.",
+  "author": {
+    "name": "AegisLine Contributors"
+  },
+  "license": "Apache-2.0",
+  "keywords": ["security", "appsec", "owasp", "mobile", "ai-security"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AegisLine",
+    "shortDescription": "Security guardrails for every code change.",
+    "longDescription": "A secure-by-default AppSec layer for frontend, backend, mobile, infrastructure, and AI code across programming languages.",
+    "developerName": "AegisLine Contributors",
+    "category": "Developer Tools",
+    "capabilities": ["Review", "Write"],
+    "defaultPrompt": [
+      "Review this change for exploitable security issues.",
+      "Threat-model this feature before implementation.",
+      "Implement this securely with AegisLine."
+    ],
+    "brandColor": "#16A085"
+  }
+}

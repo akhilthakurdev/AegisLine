@@ -1,0 +1,4 @@
+interface:
+  display_name: "AegisLine"
+  short_description: "Security guardrails for every code change"
+  default_prompt: "Review or implement this code with AegisLine security guidance."

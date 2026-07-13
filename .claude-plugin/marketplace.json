@@ -1,0 +1,13 @@
+{
+  "name": "aegisline",
+  "description": "Security guardrails for AI coding agents.",
+  "owner": {"name": "AegisLine Contributors"},
+  "plugins": [
+    {
+      "name": "aegisline",
+      "source": ".",
+      "description": "Secure-by-default guidance and AppSec reviews for frontend, backend, mobile, and AI code.",
+      "version": "0.1.0"
+    }
+  ]
+}
