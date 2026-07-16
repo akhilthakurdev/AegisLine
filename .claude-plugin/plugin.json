@@ -1,8 +1,11 @@
 {
   "name": "aegisline",
-  "description": "Secure-by-default guidance and AppSec reviews for AI coding agents.",
-  "version": "0.1.0",
-  "author": {"name": "AegisLine Contributors"},
+  "description": "Token-efficient secure engineering, security review, and repository audit workflows.",
+  "version": "0.2.0",
+  "author": {
+    "name": "AegisLine Contributors",
+    "url": "https://github.com/akhilthakurdev/AegisLine"
+  },
   "license": "Apache-2.0",
   "homepage": "https://github.com/akhilthakurdev/AegisLine",
   "repository": "https://github.com/akhilthakurdev/AegisLine",

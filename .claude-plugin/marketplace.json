@@ -1,13 +1,18 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "aegisline",
-  "description": "Security guardrails for AI coding agents.",
-  "owner": {"name": "AegisLine Contributors"},
+  "description": "Token-efficient security guardrails for AI coding agents.",
+  "owner": {
+    "name": "AegisLine Contributors",
+    "url": "https://github.com/akhilthakurdev/AegisLine"
+  },
   "plugins": [
     {
       "name": "aegisline",
-      "source": ".",
-      "description": "Secure-by-default guidance and AppSec reviews for frontend, backend, mobile, and AI code.",
-      "version": "0.1.0"
+      "source": "./",
+      "description": "Secure implementation, diff review, and repository audit workflows.",
+      "version": "0.2.0",
+      "category": "security"
     }
   ]
 }

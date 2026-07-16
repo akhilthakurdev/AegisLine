@@ -1,4 +1,4 @@
 interface:
   display_name: "AegisLine"
-  short_description: "Security guardrails for every code change"
-  default_prompt: "Review or implement this code with AegisLine security guidance."
+  short_description: "Secure implementation and threat modeling"
+  default_prompt: "Use $aegisline to secure this implementation or threat-model it."

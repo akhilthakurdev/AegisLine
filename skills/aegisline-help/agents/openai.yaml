@@ -1,0 +1,4 @@
+interface:
+  display_name: "AegisLine Help"
+  short_description: "Show AegisLine commands and usage"
+  default_prompt: "Use $aegisline-help to show the AegisLine command reference."

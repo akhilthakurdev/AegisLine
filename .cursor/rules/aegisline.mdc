@@ -1,0 +1,11 @@
+---
+description: AegisLine secure-by-default baseline for security-relevant code changes.
+globs:
+alwaysApply: true
+---
+
+# AegisLine
+
+For changed trust boundaries, identify untrusted input, privileged actions, sensitive assets, and failure impact. Enforce trusted-process authorization; validate before use; keep data separate from interpreters; keep secrets out of code, logs, URLs, clients, and prompts; use maintained cryptography; minimize privilege; bound work; and add focused negative tests.
+
+Report security findings only when code supports a plausible attack path. State review limits; never claim complete security or compliance.

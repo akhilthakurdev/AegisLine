@@ -1,0 +1,4 @@
+interface:
+  display_name: "AegisLine Review"
+  short_description: "Review code changes for security flaws"
+  default_prompt: "Use $aegisline-review to review the current changes for exploitable security issues."

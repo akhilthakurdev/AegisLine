@@ -1,0 +1,21 @@
+{
+  "name": "aegisline",
+  "interface": {
+    "displayName": "AegisLine"
+  },
+  "plugins": [
+    {
+      "name": "aegisline",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/akhilthakurdev/AegisLine.git",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

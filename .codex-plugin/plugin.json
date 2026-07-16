@@ -1,9 +1,10 @@
 {
   "name": "aegisline",
-  "version": "0.1.0",
-  "description": "Secure-by-default guidance and AppSec reviews for AI coding agents.",
+  "version": "0.2.0",
+  "description": "Token-efficient secure engineering, security review, and repository audit workflows.",
   "author": {
-    "name": "AegisLine Contributors"
+    "name": "AegisLine Contributors",
+    "url": "https://github.com/akhilthakurdev/AegisLine"
   },
   "license": "Apache-2.0",
   "homepage": "https://github.com/akhilthakurdev/AegisLine",
@@ -12,15 +13,15 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "AegisLine",
-    "shortDescription": "Security guardrails for every code change.",
-    "longDescription": "A secure-by-default AppSec layer for frontend, backend, mobile, infrastructure, and AI code across programming languages.",
+    "shortDescription": "Security guardrails and focused AppSec reviews.",
+    "longDescription": "Token-efficient secure-by-default engineering, diff review, and risk-prioritized repository auditing for frontend, backend, mobile, infrastructure, systems, and AI code.",
     "developerName": "AegisLine Contributors",
     "category": "Developer Tools",
-    "capabilities": ["Review", "Write"],
+    "capabilities": ["Instructions", "Review", "Lifecycle hooks"],
     "defaultPrompt": [
-      "Review this change for exploitable security issues.",
-      "Threat-model this feature before implementation.",
-      "Implement this securely with AegisLine."
+      "Use AegisLine to secure this implementation.",
+      "Use AegisLine Review on the current diff.",
+      "Use AegisLine Audit on this repository."
     ],
     "brandColor": "#16A085"
   }

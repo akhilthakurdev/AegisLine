@@ -1,17 +1,7 @@
 # AegisLine repository guidance
 
-AegisLine standard mode is active for coding work in this repository.
+For changes that cross a trust boundary, identify untrusted input, privileged actions, sensitive assets, and failure impact. Enforce trusted-process authorization; validate before use; keep data separate from interpreters; keep secrets out of code, logs, URLs, clients, and prompts; use maintained cryptography; minimize privilege; bound work; and add focused negative tests.
 
-Before changing code, identify the changed trust boundaries, untrusted inputs, privileged actions, sensitive assets, and failure impact. Preserve these invariants:
+For reviews, report only evidence-backed attack paths with severity, location, preconditions, impact, fix, and verification. State limits. Never claim complete security or compliance.
 
-- authorization is enforced in a trusted process, deny-by-default, for the action and object;
-- input is validated at trust boundaries and kept separate from SQL, shells, HTML, templates, paths, and other interpreters;
-- secrets and sensitive data do not enter source, clients, URLs, logs, errors, prompts, or model context;
-- maintained platform cryptography and secure password hashing are used;
-- permissions, data retention, exposed interfaces, and dependencies are minimized;
-- work is bounded with timeouts, size limits, rate limits, safe retries, and atomic state changes where relevant;
-- changed security boundaries receive focused positive and negative verification.
-
-For reviews, trace source to sink and report only plausible attack paths. Each finding needs severity, exact location, preconditions, impact, smallest robust fix, and verification. State review limits and residual risk. Never claim compliance or security from a model review alone.
-
-Load `skills/aegisline/SKILL.md` for the complete workflow and its surface, language, and OWASP references.
+Use the matching AegisLine skill for implementation, diff review, repository audit, or help. Load detailed surface, language, and OWASP references only when relevant.
