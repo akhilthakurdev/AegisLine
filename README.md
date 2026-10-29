@@ -4,6 +4,8 @@
 
 **Security guardrails for every line of code.**
 
+**Current release:** 0.3.0
+
 AegisLine is a token-efficient security agent for Claude Code, Codex, GitHub Copilot CLI, Cursor, and OpenCode. It helps build, review, audit, threat-model, and fix frontend, backend, API, mobile, infrastructure, systems, and AI applications in any programming language.
 
 It reasons from real trust boundaries and attack paths, selects language-native controls, and verifies the result. Detailed guidance loads only for the surface being changed.
@@ -125,16 +127,18 @@ Then test:
 1. Clone or download AegisLine.
 2. Copy `.cursor/rules/aegisline.mdc` into your project's `.cursor/rules/` directory.
 3. Copy the four files from `.cursor/commands/` into your project's `.cursor/commands/` directory.
-4. Reload the project and select an `aegisline-*` command from `/` in Agent chat.
+4. Copy the four `skills/aegisline*` directories into your project's `skills/` directory so commands can load the shared guidance and current references.
+5. Reload the project and select an `aegisline-*` command from `/` in Agent chat.
 
-Merge the AegisLine files; do not replace an existing `.cursor` directory. See the [Cursor rules](https://docs.cursor.com/context/rules) and [commands](https://docs.cursor.com/en/agent/chat/commands) documentation.
+Merge the AegisLine files; do not replace existing `.cursor` or `skills` directories. See the [Cursor rules](https://docs.cursor.com/context/rules) and [commands](https://docs.cursor.com/en/agent/chat/commands) documentation.
 
 ### OpenCode
 
 1. Clone or download AegisLine.
 2. Copy `.opencode/commands/*.md` into your project's `.opencode/commands/` directory.
-3. Copy AegisLine's `AGENTS.md` if the project has none; otherwise merge its short guidance.
-4. Start OpenCode in the project and run `/aegisline-help`.
+3. Copy the four `skills/aegisline*` directories into your project's `skills/` directory so commands can load the shared guidance and current references.
+4. Copy AegisLine's `AGENTS.md` if the project has none; otherwise merge its short guidance.
+5. Start OpenCode in the project and run `/aegisline-help`.
 
 Global commands can go in `~/.config/opencode/commands/`; global guidance can be merged into `~/.config/opencode/AGENTS.md`. See the [OpenCode commands](https://opencode.ai/docs/commands/) and [rules](https://opencode.ai/docs/rules/) documentation.
 
@@ -219,10 +223,15 @@ AegisLine uses current primary guidance as coverage aids:
 
 - OWASP Top 10:2025 and ASVS 5.0.0;
 - OWASP API Security Top 10:2023;
-- OWASP MASVS, MASWE, and MASTG;
-- OWASP Top 10 for LLM Applications 2025;
+- OWASP MASVS, MASWE 1.0.0, and MASTG 2.0.0;
+- OWASP Top 10 for LLM Applications 2026;
 - OWASP Top 10 for Agentic Applications 2026;
-- NIST SSDF 1.1 and NIST AI RMF Generative AI Profile;
+- OWASP Secure Coding with AI and MCP Security Cheat Sheets;
+- NIST SSDF 1.1, SP 800-218A, SP 800-63-4, and AI RMF Generative AI Profile;
+- IETF OAuth 2.0 Security Best Current Practice (RFC 9700) and SLSA 1.2;
+- OpenSSF OSPS Baseline v2026.08.28 and CISA Known Exploited Vulnerabilities;
+- NIST post-quantum FIPS 203/204/205 and NISTIR 8547 transition guidance;
+- MITRE CWE Top 25:2025 as a weakness-prioritization aid;
 - CISA Secure by Design.
 
 Source review alone cannot establish compliance with any standard.
@@ -273,9 +282,10 @@ Then install from `/plugins`, review the hook, and start a new task. Cursor and 
 .agents/plugins/marketplace.json Codex marketplace
 .codex-plugin/plugin.json       Codex manifest
 .claude-plugin/                 Claude/Copilot marketplace and manifest
+.plugin/plugin.json             Copilot CLI manifest
 .cursor/                        Cursor rule and commands
 .opencode/                      OpenCode commands
-hooks/ and scripts/             Compact session activation
+hooks/ and scripts/             Claude and Copilot compact session activation
 skills/aegisline/               Secure implementation and focused references
 skills/aegisline-review/        Diff-focused read-only review
 skills/aegisline-audit/         Risk-prioritized repository audit

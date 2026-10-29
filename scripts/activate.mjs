@@ -21,10 +21,17 @@ export function buildHookOutput(raw = "{}") {
   };
 }
 
+export function buildCopilotHookOutput() {
+  return { additionalContext };
+}
+
 async function main() {
   const chunks = [];
   for await (const chunk of process.stdin) chunks.push(chunk);
-  process.stdout.write(JSON.stringify(buildHookOutput(Buffer.concat(chunks).toString("utf8"))));
+  const output = process.argv.includes("--copilot")
+    ? buildCopilotHookOutput()
+    : buildHookOutput(Buffer.concat(chunks).toString("utf8"));
+  process.stdout.write(JSON.stringify(output));
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

@@ -11,7 +11,7 @@
       "name": "aegisline",
       "source": "./",
       "description": "Secure implementation, diff review, and repository audit workflows.",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "category": "security"
     }
   ]

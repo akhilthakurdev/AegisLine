@@ -31,7 +31,7 @@ Source: https://owasp.org/API-Security/editions/2023/en/0x11-t10/
 
 ## Mobile
 
-Use OWASP MASVS for control objectives, MASWE for weaknesses, and MASTG for runtime verification. Do not use a Top 10 list as the sole mobile test plan.
+Use OWASP MASVS for control objectives, MASWE 1.0.0 for stable weakness IDs, and MASTG 2.0.0 for runtime verification. Do not use a Top 10 list as the sole mobile test plan.
 
 - https://mas.owasp.org/MASVS/
 - https://mas.owasp.org/MASWE/
@@ -39,13 +39,36 @@ Use OWASP MASVS for control objectives, MASWE for weaknesses, and MASTG for runt
 
 ## AI and agentic systems
 
-Use OWASP Top 10 for LLM Applications 2025 for prompt injection, sensitive information disclosure, supply chain, data/model poisoning, improper output handling, excessive agency, system prompt leakage, vector/embedding weaknesses, misinformation, and unbounded consumption.
+Use OWASP Top 10 for LLM Applications 2026:
 
-Source: https://genai.owasp.org/llm-top-10/
+1. LLM01 Prompt Injection
+2. LLM02 Sensitive Information Disclosure
+3. LLM03 Excessive Agency
+4. LLM04 Supply Chain
+5. LLM05 Data and Model Poisoning
+6. LLM06 Unbounded Consumption
+7. LLM07 Misinformation
+8. LLM08 Hidden Context Exposure
+9. LLM09 Vector and Embedding Weaknesses
+10. LLM10 Improper Output Handling
+
+Source: https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/
 
 For autonomous agents, also use OWASP Top 10 for Agentic Applications 2026. It covers goal hijacking, tool misuse, identity and privilege abuse, supply-chain and memory risks, unsafe inter-agent communication, cascading failures, and rogue behavior beyond the LLM-only list.
 
 Source: https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/
+
+For coding agents, also use the OWASP Secure Coding with AI Cheat Sheet for repository instructions, dependency suggestions, MCP tools, sandboxing, test integrity, context leakage, CI agents, deceptive markup, and multi-agent propagation.
+
+Source: https://cheatsheetseries.owasp.org/cheatsheets/Secure_Coding_with_AI_Cheat_Sheet.html
+
+For MCP clients and servers, use the OWASP MCP Security Cheat Sheet for tool-definition integrity, server isolation, scoped credentials, authorization, transport validation, approvals, output handling, and supply-chain controls.
+
+Source: https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html
+
+When an agent platform exposes runtime policy middleware, the OWASP Agent Control Standard can guide portable inspection and enforcement hooks. Treat it as implementation guidance, not a compliance claim.
+
+Source: https://genai.owasp.org/resource/agent-control-standard-acs/
 
 ## Reporting
 

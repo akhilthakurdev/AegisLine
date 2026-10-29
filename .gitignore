@@ -1,4 +1,11 @@
 node_modules/
 coverage/
+.env
+.env.*
+!.env.example
+*.tgz
 .DS_Store
+Thumbs.db
 *.log
+.claude/settings.local.json
+.github/copilot/settings.local.json

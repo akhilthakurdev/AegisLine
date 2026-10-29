@@ -1,22 +1,28 @@
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { test } from "node:test";
-import { additionalContext, buildHookOutput } from "../scripts/activate.mjs";
+import { additionalContext, buildCopilotHookOutput, buildHookOutput } from "../scripts/activate.mjs";
 
 const read = (path) => readFileSync(new URL(path, import.meta.url), "utf8");
 const json = (path) => JSON.parse(read(path));
 
-test("manifests and marketplaces describe release 0.2.0", () => {
+test("manifests and marketplaces describe release 0.3.0", () => {
   const pkg = json("../package.json");
   const codex = json("../.codex-plugin/plugin.json");
+  const copilot = json("../.plugin/plugin.json");
   const claude = json("../.claude-plugin/plugin.json");
   const sharedMarket = json("../.claude-plugin/marketplace.json");
   const codexMarket = json("../.agents/plugins/marketplace.json");
+  const readme = read("../README.md");
 
-  assert.equal(pkg.version, "0.2.0");
+  assert.equal(pkg.version, "0.3.0");
   assert.equal(codex.version, pkg.version);
+  assert.equal(copilot.version, pkg.version);
+  assert.equal(copilot.skills, "skills/");
+  assert.equal(copilot.hooks, "hooks/copilot-hooks.json");
   assert.equal(claude.version, pkg.version);
   assert.equal(sharedMarket.plugins[0].version, pkg.version);
+  assert.match(readme, new RegExp(`Current release:\\*\\* ${pkg.version.replaceAll(".", "\\.")}`));
   assert.equal(sharedMarket.plugins[0].source, "./");
   assert.equal(codexMarket.interface.displayName, "AegisLine");
   assert.equal(codexMarket.plugins[0].source.source, "url");
@@ -25,13 +31,21 @@ test("manifests and marketplaces describe release 0.2.0", () => {
 });
 
 test("activation is compact and runs only at session boundaries", () => {
-  const hooks = json("../hooks/hooks.json");
-  assert.deepEqual(Object.keys(hooks.hooks), ["SessionStart"]);
-  assert.match(hooks.hooks.SessionStart[0].matcher, /compact/);
+  const claudeHooks = json("../hooks/hooks.json");
+  assert.deepEqual(Object.keys(claudeHooks.hooks), ["SessionStart"]);
+  assert.match(claudeHooks.hooks.SessionStart[0].matcher, /compact/);
+
+  const copilotHooks = json("../hooks/copilot-hooks.json");
+  assert.equal(copilotHooks.version, 1);
+  assert.deepEqual(Object.keys(copilotHooks.hooks), ["sessionStart"]);
+  assert.match(copilotHooks.hooks.sessionStart[0].command, /\$\{PLUGIN_ROOT\}/);
+  assert.match(copilotHooks.hooks.sessionStart[0].command, /--copilot/);
+  assert.equal(copilotHooks.hooks.sessionStart[0].timeoutSec, 5);
 
   const output = buildHookOutput(JSON.stringify({ hook_event_name: "SessionStart" }));
   assert.equal(output.hookSpecificOutput.hookEventName, "SessionStart");
   assert.equal(output.hookSpecificOutput.additionalContext, additionalContext);
+  assert.deepEqual(buildCopilotHookOutput(), { additionalContext });
   assert.match(additionalContext, /AegisLine baseline/);
   assert.match(additionalContext, /authorization/);
   assert.ok(additionalContext.length <= 450, `activation context is ${additionalContext.length} characters`);
@@ -58,9 +72,23 @@ test("focused skills and progressive references stay compact", () => {
 
   assert.doesNotMatch(main, /references\/surfaces\.md/);
   assert.match(read("../skills/aegisline/references/owasp.md"), /ASVS 5\.0\.0/);
+  assert.match(read("../skills/aegisline/references/owasp.md"), /LLM Applications 2026/);
+  assert.doesNotMatch(read("../skills/aegisline/references/owasp.md"), /LLM Applications 2025/);
   assert.match(read("../skills/aegisline/references/owasp.md"), /Agentic Applications 2026/);
+  assert.match(read("../skills/aegisline/references/owasp.md"), /Secure_Coding_with_AI_Cheat_Sheet/);
+  assert.match(read("../skills/aegisline/references/owasp.md"), /MCP_Security_Cheat_Sheet/);
+  assert.match(read("../skills/aegisline/references/owasp.md"), /MASWE 1\.0\.0/);
+  assert.match(read("../skills/aegisline/references/owasp.md"), /MASTG 2\.0\.0/);
   assert.match(read("../skills/aegisline/references/ai.md"), /confused-deputy/);
   assert.match(read("../skills/aegisline/references/ai.md"), /MCP/);
+  assert.match(read("../skills/aegisline/references/backend.md"), /RFC 9700/);
+  assert.match(read("../skills/aegisline/references/backend.md"), /SP 800-63-4/);
+  assert.match(read("../skills/aegisline/references/platform.md"), /SLSA 1\.2/);
+  assert.match(read("../skills/aegisline/references/platform.md"), /OSPS Baseline v2026\.08\.28/);
+  assert.match(read("../skills/aegisline/references/platform.md"), /NISTIR 8547/);
+  assert.match(read("../skills/aegisline/references/verification.md"), /Known Exploited Vulnerabilities/);
+  assert.match(read("../skills/aegisline/references/verification.md"), /CWE Top 25:2025/);
+  assert.match(read("../skills/aegisline/references/languages.md"), /BinaryFormatter/);
 });
 
 test("host command syntax matches current plugin behavior", () => {
@@ -75,7 +103,7 @@ test("host command syntax matches current plugin behavior", () => {
   assert.match(read("../.github/prompts/aegisline-review.prompt.md"), /skills\/aegisline-review\/SKILL\.md/);
 });
 
-test("Cursor and OpenCode expose matching compact commands", () => {
+test("Cursor and OpenCode commands load the shared skills and references", () => {
   assert.match(read("../.cursor/rules/aegisline.mdc"), /alwaysApply: true/);
 
   for (const name of ["aegisline", "aegisline-review", "aegisline-audit", "aegisline-help"]) {
@@ -85,10 +113,22 @@ test("Cursor and OpenCode expose matching compact commands", () => {
     assert.ok(existsSync(openCodePath), `missing OpenCode command ${name}`);
     assert.ok(Buffer.byteLength(read(`../.cursor/commands/${name}.md`)) < 1400, `Cursor command ${name} is too large`);
     assert.ok(Buffer.byteLength(read(`../.opencode/commands/${name}.md`)) < 1400, `OpenCode command ${name} is too large`);
+    assert.match(read(`../.cursor/commands/${name}.md`), new RegExp(`skills/${name}/SKILL\\.md`));
+    assert.match(read(`../.opencode/commands/${name}.md`), new RegExp(`skills/${name}/SKILL\\.md`));
   }
 
+  assert.match(read("../.cursor/commands/aegisline.md"), /skills\/aegisline\/references\//);
+  assert.match(read("../.cursor/commands/aegisline-review.md"), /skills\/aegisline\/references\//);
+  assert.match(read("../.cursor/commands/aegisline-audit.md"), /skills\/aegisline\/references\//);
+  assert.match(read("../.opencode/commands/aegisline.md"), /skills\/aegisline\/references\//);
+  assert.match(read("../.opencode/commands/aegisline-review.md"), /skills\/aegisline\/references\//);
+  assert.match(read("../.opencode/commands/aegisline-audit.md"), /skills\/aegisline\/references\//);
   assert.match(read("../.opencode/commands/aegisline-review.md"), /\$ARGUMENTS/);
   assert.match(read("../.opencode/commands/aegisline-audit.md"), /\$ARGUMENTS/);
+
+  const readme = read("../README.md");
+  assert.match(readme, /Cursor[\s\S]*Copy the four `skills\/aegisline\*` directories/);
+  assert.match(readme, /OpenCode[\s\S]*Copy the four `skills\/aegisline\*` directories/);
 });
 
 test("public release files are safe and complete", () => {
@@ -99,7 +139,10 @@ test("public release files are safe and complete", () => {
   assert.ok(Buffer.byteLength(license) > 10000, "Apache-2.0 license text is incomplete");
   assert.match(license, /TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION/);
   assert.match(license, /Copyright 2026 AegisLine Contributors/);
-  assert.equal(read("../.gitignore").replace(/\r\n/g, "\n"), "node_modules/\ncoverage/\n.DS_Store\n*.log\n");
+  assert.equal(
+    read("../.gitignore").replace(/\r\n/g, "\n"),
+    "node_modules/\ncoverage/\n.env\n.env.*\n!.env.example\n*.tgz\n.DS_Store\nThumbs.db\n*.log\n.claude/settings.local.json\n.github/copilot/settings.local.json\n"
+  );
   assert.match(read("../.gitattributes"), /\* text=auto eol=lf/);
   assert.match(workflow, /permissions:\s+contents: read/);
   assert.match(workflow, /actions\/checkout@[0-9a-f]{40}/);

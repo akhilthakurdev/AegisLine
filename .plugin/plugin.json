@@ -1,0 +1,15 @@
+{
+  "name": "aegisline",
+  "description": "Token-efficient secure engineering, security review, and repository audit workflows.",
+  "version": "0.3.0",
+  "author": {
+    "name": "AegisLine Contributors",
+    "url": "https://github.com/akhilthakurdev/AegisLine"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/akhilthakurdev/AegisLine",
+  "repository": "https://github.com/akhilthakurdev/AegisLine",
+  "keywords": ["security", "appsec", "owasp", "mobile", "ai-security"],
+  "skills": "skills/",
+  "hooks": "hooks/copilot-hooks.json"
+}

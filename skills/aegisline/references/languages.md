@@ -27,4 +27,11 @@ Security concepts apply across languages; safe primitives depend on the exact co
 | WebAssembly / plugins | host imports, memory bounds, capability leakage, module provenance | capability-limited hosts, fuel/time limits, validated modules, narrow interfaces |
 | Terraform / YAML / configuration | public exposure, wildcard identity, secret interpolation, unsafe defaults | typed modules, policy checks, least privilege, secret references, plan review and pinning |
 
+Version-sensitive safe defaults to verify against the detected runtime:
+
+- Node.js: use the Permission Model to restrict filesystem, network, child processes, and native add-ons when the deployment supports it: https://nodejs.org/learn/getting-started/security-best-practices
+- Python: use `tarfile` extraction filters and explicit file-count, size, path, link, CPU, and disk limits; Python 3.14 defaults to `data`, but that does not make untrusted archives safe: https://docs.python.org/3/library/tarfile.html#extraction-filters
+- .NET: never restore `BinaryFormatter`; its in-box implementation was removed in .NET 9 because it cannot be made safe: https://learn.microsoft.com/dotnet/standard/serialization/binaryformatter-security-guide
+- Go: prefer `filepath.IsLocal`, `filepath.Localize`, and Go 1.24+ `os.Root`/`os.OpenInRoot` for attacker-controlled paths, according to the filesystem threat model: https://go.dev/blog/osroot
+
 Do not recommend a dependency only to avoid understanding a small security boundary. When a dependency is justified, check maintenance, provenance, license, version fit, and operational cost.

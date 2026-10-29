@@ -3,8 +3,10 @@
 Prompting is not a security boundary. Place deterministic controls around model and agent behavior.
 
 - Treat user prompts, retrieved documents, web pages, tool descriptions, MCP metadata, memory, files, tool output, and model output as untrusted content. Keep instructions and data structurally separate where possible.
+- Treat repository rules, issue text, comments, Markdown links, Unicode controls, generated patches, tests, and tool schemas as untrusted. Prevent persistent steering, dependency hallucination, test weakening, deceptive links, and out-of-scope edits from silently changing agent authority.
 - Expect direct and indirect prompt injection, goal hijacking, context poisoning, tool poisoning, and malicious multi-agent messages. Do not grant authority based on model confidence or text that claims to be trusted.
 - Authorize every tool action in trusted code using the authenticated principal, current tenant, typed arguments, allowlisted resources and actions, least-privilege credentials, and fresh state. Require human confirmation for clearly explained high-impact, irreversible, or external actions.
+- For MCP, isolate each server as a security domain; review and pin complete tool definitions; detect definition changes and tool shadowing; use per-server, audience-restricted credentials; and sandbox local servers with explicit filesystem and network access.
 - Prevent confused-deputy behavior: bind delegation, approvals, callbacks, and tool results to the originating user, task, scope, and expiry. Reauthorize when plans or arguments materially change.
 - Validate and encode model output before passing it to shells, code execution, browsers, databases, templates, workflows, URLs, or other interpreters. Sandbox execution and constrain filesystem, network, time, and resources.
 - Enforce tenant and document authorization before retrieval, not after generation. Track provenance, validate ingestion, isolate indexes and caches, detect poisoning, and define deletion and re-indexing behavior.
